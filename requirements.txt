@@ -1,0 +1,5 @@
+requests==2.25.1
+fake_useragent==0.1.11
+peewee==3.14.4
+lxml==4.6.3
+aiohttp==3.7.4.post0
