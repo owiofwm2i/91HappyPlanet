@@ -14,8 +14,10 @@ an unlimit 91pxxn crawler  ![visitors](https://visitor-badge.glitch.me/badge?pag
 ## 安装运行
 ### 配置config.ini文件
 - 设置文件保存路径
-- 如果机器安装好ffmpeg(如debian系可以为 `sudo apt install ffmpeg`, mac`brew insatll ffmpeg` etc)，可以设置相应选项位True，
+- 如果机器安装好ffmpeg(如debian系可以为 `sudo apt install ffmpeg`, mac`brew insatll ffmpeg` etc)，可以设置相应选项为True，
+### 安装以来库
 - 安装依赖库`pip install -r requirements.txt`. 推荐使用虚拟环境
+### 运行测试
 - 简单运行 `python main.py`
 
 
