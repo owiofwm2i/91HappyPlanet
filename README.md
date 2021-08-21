@@ -1,2 +1,22 @@
 # 91HappyPlanet
-an unlimit 91pxxn crawler
+an unlimit 91pxxn crawler  ![visitors](https://visitor-badge.glitch.me/badge?page_id=91HappyPlanet)
+
+## 运行环境
+- 支持所有unix-like系统
+- python3.5+ (becasue of async)
+
+## 运行效果
+- 91全站无限制爬虫
+- 自动下载视频切片
+- 自动转换为mp4(with ffmpeg support)
+
+
+## 安装运行
+### 配置config.ini文件
+- 设置文件保存路径
+- 如果机器安装好ffmpeg(如debian系可以为)，可以设置相应选项位True，
+- 安装依赖库`pip install -r requirements.txt`. 推荐使用虚拟环境
+- 简单运行 `python main.py`
+
+
+
