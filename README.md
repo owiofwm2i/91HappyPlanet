@@ -2,7 +2,7 @@
 an unlimit 91pxxn crawler  ![visitors](https://visitor-badge.glitch.me/badge?page_id=91HappyPlanet)
 
 ## 运行环境
-- 支持所有unix-like系统
+- 支持所有unix-like系统(也就是不支持windows)
 - python3.5+ (becasue of async)
 
 ## 运行效果
