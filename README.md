@@ -20,5 +20,12 @@ an unlimit 91pxxn crawler  ![visitors](https://visitor-badge.glitch.me/badge?pag
 ### 运行测试
 - 简单运行 `python main.py`
 
+## 错误解决
 
+### fake_useragent.errors.FakeUserAgentError: Maximum amount of retries reached
 
+下载 `https://fake-useragent.herokuapp.com/browsers/0.1.11` 并以后缀.json充命名
+修改 `libs/downloader.py` 和 `libs/asyncSpider.py` 的
+```python
+a=UserAgent(path="刚才重命名的json路径")
+```
