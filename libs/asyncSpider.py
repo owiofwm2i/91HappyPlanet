@@ -129,7 +129,7 @@ class Spider(Config):
         while not work_queue.empty():
             videoTitle, videoDuration, videoUrl, videoThumbUrl = await work_queue.get()
             try:
-                async with aiohttp.ClientSession() as session:
+                async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(verify_ssl=False)) as session:
                     videoDecodeUrl = await self.getM38UUrl(session, videoUrl)
                     if videoDecodeUrl:
                         self.downloader.run(videoDecodeUrl, videoThumbUrl, videoTitle=videoTitle,
