@@ -57,15 +57,6 @@ class DownLoader(object):
                             urls.append(baseUrl + "/" + str(line.strip(b"\n")).replace("\'", "").replace("b", ""))
                             files.append(str(line.strip(b"\n")).replace("\'", "").replace("b", ""))
 
-                # uploadUrl = github.uploadFile(fileName, "{}.m3u8".format(fileName), base64.b64encode(r.content))
-                # if uploadUrl:
-                #     log.logger.info("videoTitle:{}, videoDuration:{}, videoUrl:{}".format(kwargs.get("videoTitle"),
-                #                                                                           kwargs.get("videoDuration"),
-                #                                                                           uploadUrl))
-                #     sql = '''INSERT INTO defaultVideo (videoId, videoTitle, videoUrl, videoDuration) VALUES ("%s", "%s", "%s", "%s")''' % (
-                #     fileName, kwargs.get("videoTitle"), uploadUrl, kwargs.get("videoDuration"))
-                #     log.logger.info("插入视频基本信息sql:{}".format(sql))
-                #     db.insert(sql)
                 return fileName, urls, files
             time.sleep(random.randint(2, 5))
             i += 1
@@ -151,8 +142,13 @@ class DownLoader(object):
         # 去掉特殊字符的标题
         video_title = re.sub(u"([^\u4e00-\u9fa5\u0030-\u0039\u0041-\u005a\u0061-\u007a])", "_",
                              kwargs.get("videoTitle"))
-        tsFileName, tsUrls, tsFiles = self.m3u8s(m3u8Url, videoTitle=kwargs.get("videoTitle"),
-                                                 videoDuration=kwargs.get("videoDuration"))
+        try:
+            tsFileName, tsUrls, tsFiles = self.m3u8s(m3u8Url, videoTitle=kwargs.get("videoTitle"),
+                                                     videoDuration=kwargs.get("videoDuration"))
+        except Exception as e:
+            log.logger.error("临时错误解决方案,{}".format(e))
+            return
+
         if tsFileName:
             # self.downThumb(tsFileName, thumbUrl)
             for i in range(len(tsUrls)):

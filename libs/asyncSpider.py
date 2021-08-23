@@ -14,6 +14,7 @@ from concurrent.futures import ThreadPoolExecutor, wait
 from libs.downloader import DownLoader
 from utils.logger import Logger
 from utils.readSetting import Config
+from multiprocessing import cpu_count
 
 ua = UserAgent()
 
@@ -24,7 +25,7 @@ class Spider(Config):
 
     def __init__(self):
         super().__init__()
-        self.max_threads = 10
+        self.max_threads = cpu_count() * 2
         self.payload = {
             "session_language": "cn_CN"
         }
@@ -51,16 +52,19 @@ class Spider(Config):
             "referer": url,
             "X-Forwarded-For": str(IPv4Address(random.getrandbits(32)))
         }
-        response = requests.request("POST", url, headers=headers, timeout=30)
-        log.logger.debug("首页状态码:{}".format(response.status_code))
-        html = self.__parse_results(response.text)
-        tmpPages = html.xpath("//div[contains(@class,'pagingnav')]/form/a/text()")
-        pages = []
-        for page in tmpPages:
-            if page.isdigit():
-                pages.append(int(page))
-        log.logger.debug("总共页数:{}".format(max(pages)))
-        return max(pages)
+        try:
+            response = requests.request("POST", url, headers=headers, timeout=30)
+            log.logger.debug("首页状态码:{}".format(response.status_code))
+            html = self.__parse_results(response.text)
+            tmpPages = html.xpath("//div[contains(@class,'pagingnav')]/form/a/text()")
+            pages = []
+            for page in tmpPages:
+                if page.isdigit():
+                    pages.append(int(page))
+            log.logger.debug("总共页数:{}".format(max(pages)))
+            return max(pages)
+        except Exception as e:
+            log.logger.error("临时线程错误解决,{}".format(e))
 
     def getVideoUrlList(self, pageUrl):
         """
@@ -175,8 +179,11 @@ class Spider(Config):
     #         start += 1
 
     def run(self):
-        pageNum = self.getPageNum(self.pornUrl)
-
+        try:
+            pageNum = self.getPageNum(self.pornUrl)
+        except Exception as e:
+            log.logger.error("获取页面发生错误,{}".format(e))
+            return
         # part = pageNum // 24
         # pool = ThreadPoolExecutor(max_workers=6)
         # futures = []
